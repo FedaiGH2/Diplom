@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    >
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+
+        <TextView
+            android:id="@+id/TitleForList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MyFit"
+            android:textSize="60sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/emailInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/passwordInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Пароль"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:layout_marginTop="12dp" />
+
+        <EditText
+            android:id="@+id/confirmPasswordInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Подтвердите пароль"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:layout_marginTop="12dp" />
+
+        <Button
+            android:id="@+id/registerBtn"
+            android:layout_width="202dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:text="Регистрация"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FFD700"
+            />
+
+        <Button
+            android:id="@+id/backToLoginBtn"
+            android:layout_width="202dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:text="Назад"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FFD700"
+            />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Добавьте 100г продукта"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="16dp"/>
+
+
+        <EditText
+            android:id="@+id/inputName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Название продукта"
+            android:inputType="text"/>
+
+
+        <EditText
+            android:id="@+id/inputCalories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Калории"
+            android:inputType="numberDecimal"/>
+
+        <EditText
+            android:id="@+id/inputProtein"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Белки"
+            android:inputType="numberDecimal"/>
+
+
+        <EditText
+            android:id="@+id/inputFat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Жиры"
+            android:inputType="numberDecimal"/>
+
+
+        <EditText
+            android:id="@+id/inputCarb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Углеводы"
+            android:inputType="numberDecimal"/>
+
+
+        <EditText
+            android:id="@+id/inputFiber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Клетчатка"
+            android:inputType="numberDecimal"/>
+
+
+        <Button
+            android:id="@+id/addProductBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Добавить продукт"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</ScrollView>

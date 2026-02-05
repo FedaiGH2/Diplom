@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#FFFFFF"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <ScrollView
+        android:scrollbars="none"
+        android:id="@+id/mainScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:layout_above="@id/bottomNavigation">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/prevDayBtn"
+                    android:layout_width="48dp"
+                    android:layout_height="51dp"
+                    android:background="@drawable/left"
+                    app:backgroundTint="@android:color/holo_orange_light" />
+
+                <TextView
+                    android:id="@+id/dayOfWeekText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Понедельник 25-11-2025"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/nextDayBtn"
+                    android:layout_width="48dp"
+                    android:layout_height="51dp"
+                    android:background="@drawable/right"
+                    app:backgroundTint="@android:color/holo_orange_light" />
+
+
+
+
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/searchInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Поиск продукта"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                android:drawableStart="@android:drawable/ic_menu_search"
+                android:drawableTint="#FFFFFF"
+                android:padding="12dp"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="text"
+                android:layout_marginTop="20dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchResultsRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="4dp"/>
+
+
+
+
+
+
+
+            <TextView
+                android:id="@+id/mainChartTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Калории за сегодня"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="30dp"/>
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/mainPieChart"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/mainChartValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0 / 0"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp"/>
+
+
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/linear_bg_gold"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/proteinTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Белки"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"/>
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/proteinChart"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_marginTop="4dp"/>
+
+                        <TextView
+                            android:id="@+id/proteinValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 / 0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/fatTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Жиры"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"/>
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/fatChart"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_marginTop="4dp"/>
+                        <TextView
+
+                            android:id="@+id/fatValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 / 0"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_marginTop="8dp">
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/carbTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Углеводы"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="20dp"/>
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/carbChart"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_marginTop="4dp"/>
+
+                        <TextView
+                            android:id="@+id/carbValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 / 0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/fiberTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Клетчатка"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="20dp"/>
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/fiberChart"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_marginTop="4dp"/>
+                        <TextView
+
+                            android:id="@+id/fiberValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 / 0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/linear_bg_white"
+                android:padding="16dp"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/TitleForList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Съеденные продукты"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/todayMealsRecycler"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:padding="0dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        app:itemIconSize="32dp"
+        app:itemTextColor="@color/black"
+        app:itemIconTint="@color/black"
+        app:menu="@menu/bottom_nav_menu" />
+
+</RelativeLayout>

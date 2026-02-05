@@ -1,0 +1,140 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/linear_bg_white">
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dialogAddFavorite"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/star"
+        android:padding="4dp"
+        android:text=""
+        app:backgroundTint="#FFD700" />
+
+    <TextView
+        android:id="@+id/dialogProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="На 100 г"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+
+    <TextView
+        android:id="@+id/dialogProductName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Название продукта"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_below="@id/dialogAddFavorite"
+        android:layout_marginTop="8dp"/>
+
+
+    <TextView
+        android:id="@+id/dialogProteinText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Белки: 0"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_below="@id/dialogProductName"
+        android:layout_marginTop="8dp"/>
+
+
+    <TextView
+        android:id="@+id/dialogFatText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Жиры: 0"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_below="@id/dialogProteinText"
+        android:layout_marginTop="4dp"/>
+
+
+    <TextView
+        android:id="@+id/dialogCarbText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Углеводы: 0"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_below="@id/dialogFatText"
+        android:layout_marginTop="4dp"/>
+
+
+    <TextView
+        android:id="@+id/dialogFiberText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Клетчатка: 0"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_below="@id/dialogCarbText"
+        android:layout_marginTop="4dp"/>
+
+
+    <TextView
+        android:id="@+id/dialogCaloriesText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Калории: 0"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_below="@id/dialogFiberText"
+        android:layout_marginTop="4dp"/>
+
+
+    <EditText
+        android:id="@+id/dialogGramsInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Граммы"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_below="@id/dialogCaloriesText"
+        android:layout_marginTop="8dp"
+        android:inputType="number"/>
+
+
+    <LinearLayout
+        android:id="@+id/dialogButtonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_below="@id/dialogGramsInput"
+        android:layout_marginTop="12dp">
+
+        <Button
+            android:id="@+id/dialogBtn100g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100 г"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FFD700"
+            android:textSize="20sp"
+            android:padding="8dp"/>
+
+        <Button
+            android:id="@+id/dialogAddMeal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Добавить"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FFD700"
+            android:textSize="20sp"
+            android:layout_marginStart="16dp"
+            android:padding="8dp"/>
+    </LinearLayout>
+
+</RelativeLayout>
