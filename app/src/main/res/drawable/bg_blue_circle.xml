@@ -1,4 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- bg_blue_circle_small.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-</selector>
+    <item android:gravity="center">
+        <shape android:shape="oval">
+            <size
+                android:width="50dp"
+                android:height="50dp"/>
+            <solid android:color="#334DA3FF"/>
+        </shape>
+    </item>
+
+</layer-list>

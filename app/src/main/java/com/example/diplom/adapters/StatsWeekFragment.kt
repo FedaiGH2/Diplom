@@ -20,7 +20,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-
+import com.github.mikephil.charting.charts.HorizontalBarChart
 class StatsWeekFragment : Fragment() {
 
     private lateinit var chartCalories: BarChart
@@ -112,26 +112,76 @@ class StatsWeekFragment : Fragment() {
         }
     }
 
-    private fun setupChart(chart: BarChart, entries: List<BarEntry>, label: String, labels: List<String>) {
+    private fun setupChart(
+        chart: BarChart,
+        entries: List<BarEntry>,
+        label: String,
+        labels: List<String>
+    ) {
         val dataSet = BarDataSet(entries, label).apply {
             color = resources.getColor(R.color.blue)
+
+            setDrawValues(true)
+            valueTextSize = 14f   // 👀 крупные числа над столбцами
         }
 
-        val data = BarData(dataSet).apply { barWidth = 0.5f }
+        val data = BarData(dataSet).apply {
+            barWidth = 0.5f
+            setValueTextSize(14f)
+        }
 
         chart.data = data
-        chart.description.isEnabled = false
 
-        val xAxis: XAxis = chart.xAxis
+        // ===== ОБЩИЕ НАСТРОЙКИ =====
+        chart.description.isEnabled = false
+        chart.legend.isEnabled = false
+
+        chart.setDrawGridBackground(false)
+        chart.setDrawBorders(false)
+
+        chart.setFitBars(true)          // 🔥 важно для X-оси
+        chart.setScaleEnabled(false)    // ❌ убираем зум пальцами
+        chart.setPinchZoom(false)
+        chart.setDragEnabled(true)
+
+        chart.extraBottomOffset = 10f
+        chart.extraLeftOffset = 00f
+        chart.extraRightOffset = 00f
+
+        // ===== X AXIS =====
+        val xAxis = chart.xAxis
         xAxis.valueFormatter = IndexAxisValueFormatter(labels)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+
         xAxis.granularity = 1f
+        xAxis.labelCount = labels.size   // 🔥 чтобы все подписи были видны
         xAxis.labelRotationAngle = -45f
 
-        val left: YAxis = chart.axisLeft
-        val right: YAxis = chart.axisRight
+        xAxis.textSize = 12f
+        xAxis.setDrawGridLines(false)
+        chart.setTouchEnabled(false)   // 🔥 ГЛАВНОЕ — отключает ВСЕ касания
+        chart.setDragEnabled(false)    // ❌ убираем скролл
+        chart.setScaleEnabled(false)   // ❌ зум
+        chart.setPinchZoom(false)      // ❌ зум двумя пальцами
+        chart.isHighlightPerTapEnabled = false  // ❌ нажатия на столбцы
+        chart.isHighlightPerDragEnabled = false // ❌ выделение при свайпе
+        xAxis.spaceMin = 0.5f
+        xAxis.spaceMax = 0.5f
+
+        // ===== Y AXIS =====
+        val left = chart.axisLeft
+        val right = chart.axisRight
+
         right.isEnabled = false
+
+        left.textSize = 12f
         left.granularity = 1f
+        left.setDrawGridLines(false)
+
+        left.axisMinimum = 0f   // ❌ запрещаем отрицательные значения
+
+        // ===== АНИМАЦИЯ =====
+        chart.animateY(800)
 
         chart.invalidate()
     }

@@ -83,7 +83,84 @@
                 android:layout_marginTop="4dp"/>
 
 
+            <!-- Полоска прогресса веса -->
+            <LinearLayout
+                android:id="@+id/weightProgressContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:padding="8dp">
 
+                <TextView
+                    android:id="@+id/Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ваш прогресс"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ProgressBar
+                        android:id="@+id/weightProgressBar"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/progress_weight" />
+
+                    <ImageButton
+                        android:id="@+id/btnEditWeight"
+                        android:layout_width="48dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:src="@drawable/ic_green_plus" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/startWeightText"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content"
+                        android:text="Начало: 0 кг"/>
+
+                    <TextView
+                        android:id="@+id/currentWeightText"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content"
+                        android:text="Сейчас: 0 кг"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/goalWeightText"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content"
+                        android:text="Цель: 0 кг"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
 
 
 
@@ -295,7 +372,7 @@
                     android:id="@+id/TitleForList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Съеденные продукты"
+                    android:text="История"
                     android:textSize="30sp"
                     android:textStyle="bold"
                     android:gravity="center"
@@ -315,15 +392,66 @@
     </ScrollView>
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigation"
+    <!-- BOTTOM BAR -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
         android:background="#FFFFFF"
-        app:itemIconSize="32dp"
-        app:itemTextColor="@color/black"
-        app:itemIconTint="@color/black"
-        app:menu="@menu/bottom_nav_menu" />
+        android:weightSum="5"
+        android:layout_alignParentBottom="true"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/home"
+            android:padding="18dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <ImageView
+            android:id="@+id/fav"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/person"
+            android:padding="18dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <ImageView
+            android:id="@+id/scan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/code"
+            android:padding="18dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <ImageView
+            android:id="@+id/food"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/favor"
+            android:padding="18dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <ImageView
+            android:id="@+id/stats"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/stat"
+            android:padding="18dp"
+            android:clickable="true"
+            android:focusable="true"/>
+    </LinearLayout>
 
 </RelativeLayout>

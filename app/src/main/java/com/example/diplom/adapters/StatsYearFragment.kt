@@ -54,13 +54,20 @@ class StatsYearFragment : Fragment() {
         val user = currentUser ?: return
         val userId = user.uid
 
-        val months = mutableListOf<String>()
-        val calendar = Calendar.getInstance().apply { set(Calendar.DAY_OF_YEAR, 1) }
+        val calendar = Calendar.getInstance()
 
-        for (i in 0..11) {
-            val c = calendar.clone() as Calendar
-            c.set(Calendar.MONTH, i)
-            months.add(SimpleDateFormat("MMM", Locale.getDefault()).format(c.time))
+        val monthsList = mutableListOf<Calendar>()
+
+        // ===== текущий + 6 предыдущих =====
+        for (i in 6 downTo 0) {
+            val cal = calendar.clone() as Calendar
+            cal.add(Calendar.MONTH, -i)
+            monthsList.add(cal)
+        }
+
+        // ===== подписи месяцев =====
+        val monthsLabels = monthsList.map {
+            SimpleDateFormat("MMM", Locale.getDefault()).format(it.time)
         }
 
         val caloriesEntries = mutableListOf<BarEntry>()
@@ -69,56 +76,69 @@ class StatsYearFragment : Fragment() {
         val carbEntries = mutableListOf<BarEntry>()
         val fiberEntries = mutableListOf<BarEntry>()
 
-        for (monthIndex in 0..11) {
-            val start = Calendar.getInstance().apply {
-                set(Calendar.MONTH, monthIndex)
-                set(Calendar.DAY_OF_MONTH, 1)
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }
+        var loadedMonths = 0
+
+        for ((index, monthCal) in monthsList.withIndex()) {
+
+            val start = monthCal.clone() as Calendar
+            start.set(Calendar.DAY_OF_MONTH, 1)
+            start.set(Calendar.HOUR_OF_DAY, 0)
+            start.set(Calendar.MINUTE, 0)
+            start.set(Calendar.SECOND, 0)
+            start.set(Calendar.MILLISECOND, 0)
 
             val daysInMonth = start.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-            val totalCalories = floatArrayOf(0f)
-            val totalProtein = floatArrayOf(0f)
-            val totalFat = floatArrayOf(0f)
-            val totalCarb = floatArrayOf(0f)
-            val totalFiber = floatArrayOf(0f)
+            var totalCalories = 0f
+            var totalProtein = 0f
+            var totalFat = 0f
+            var totalCarb = 0f
+            var totalFiber = 0f
 
-            for (dayOfMonth in 1..daysInMonth) {
+            var daysProcessed = 0
+
+            for (day in 1..daysInMonth) {
+
                 val dayCal = start.clone() as Calendar
-                dayCal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                val dayStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(dayCal.time)
+                dayCal.set(Calendar.DAY_OF_MONTH, day)
+
+                val dayStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    .format(dayCal.time)
 
                 db.collection("dailyMeals")
                     .document(userId)
                     .collection(dayStr)
                     .get()
                     .addOnSuccessListener { querySnapshot ->
-                        for (doc: QueryDocumentSnapshot in querySnapshot) {
-                            totalCalories[0] += doc.getDouble("calories")?.toFloat() ?: 0f
-                            totalProtein[0] += doc.getDouble("protein")?.toFloat() ?: 0f
-                            totalFat[0] += doc.getDouble("fat")?.toFloat() ?: 0f
-                            totalCarb[0] += doc.getDouble("carb")?.toFloat() ?: 0f
-                            totalFiber[0] += doc.getDouble("fiber")?.toFloat() ?: 0f
+
+                        for (doc in querySnapshot) {
+                            totalCalories += doc.getDouble("calories")?.toFloat() ?: 0f
+                            totalProtein += doc.getDouble("protein")?.toFloat() ?: 0f
+                            totalFat += doc.getDouble("fat")?.toFloat() ?: 0f
+                            totalCarb += doc.getDouble("carb")?.toFloat() ?: 0f
+                            totalFiber += doc.getDouble("fiber")?.toFloat() ?: 0f
                         }
 
-                        // Добавляем данные месяца только после последнего дня
-                        if (dayOfMonth == daysInMonth) {
-                            caloriesEntries.add(BarEntry(monthIndex.toFloat(), totalCalories[0]))
-                            proteinEntries.add(BarEntry(monthIndex.toFloat(), totalProtein[0]))
-                            fatEntries.add(BarEntry(monthIndex.toFloat(), totalFat[0]))
-                            carbEntries.add(BarEntry(monthIndex.toFloat(), totalCarb[0]))
-                            fiberEntries.add(BarEntry(monthIndex.toFloat(), totalFiber[0]))
+                        daysProcessed++
 
-                            if (caloriesEntries.size == 12) {
-                                setupChart(chartCalories, caloriesEntries, "Калории", months)
-                                setupChart(chartProtein, proteinEntries, "Белки", months)
-                                setupChart(chartFat, fatEntries, "Жиры", months)
-                                setupChart(chartCarb, carbEntries, "Углеводы", months)
-                                setupChart(chartFiber, fiberEntries, "Клетчатка", months)
+                        // ===== когда ВСЕ дни месяца обработаны =====
+                        if (daysProcessed == daysInMonth) {
+
+                            caloriesEntries.add(BarEntry(index.toFloat(), totalCalories))
+                            proteinEntries.add(BarEntry(index.toFloat(), totalProtein))
+                            fatEntries.add(BarEntry(index.toFloat(), totalFat))
+                            carbEntries.add(BarEntry(index.toFloat(), totalCarb))
+                            fiberEntries.add(BarEntry(index.toFloat(), totalFiber))
+
+                            loadedMonths++
+
+                            // ===== когда ВСЕ месяцы готовы =====
+                            if (loadedMonths == monthsList.size) {
+                                setupChart(chartCalories, caloriesEntries, "Калории", monthsLabels)
+                                setupChart(chartProtein, proteinEntries, "Белки", monthsLabels)
+                                setupChart(chartFat, fatEntries, "Жиры", monthsLabels)
+                                setupChart(chartCarb, carbEntries, "Углеводы", monthsLabels)
+                                setupChart(chartFiber, fiberEntries, "Клетчатка", monthsLabels)
                             }
                         }
                     }
@@ -126,26 +146,76 @@ class StatsYearFragment : Fragment() {
         }
     }
 
-    private fun setupChart(chart: BarChart, entries: List<BarEntry>, label: String, labels: List<String>) {
+    private fun setupChart(
+        chart: BarChart,
+        entries: List<BarEntry>,
+        label: String,
+        labels: List<String>
+    ) {
         val dataSet = BarDataSet(entries, label).apply {
             color = resources.getColor(R.color.blue)
+
+            setDrawValues(true)
+            valueTextSize = 14f   // 👀 крупные числа над столбцами
         }
 
-        val data = BarData(dataSet).apply { barWidth = 0.5f }
+        val data = BarData(dataSet).apply {
+            barWidth = 0.5f
+            setValueTextSize(14f)
+        }
 
         chart.data = data
-        chart.description.isEnabled = false
 
-        val xAxis: XAxis = chart.xAxis
+        // ===== ОБЩИЕ НАСТРОЙКИ =====
+        chart.description.isEnabled = false
+        chart.legend.isEnabled = false
+
+        chart.setDrawGridBackground(false)
+        chart.setDrawBorders(false)
+        chart.setTouchEnabled(false)   // 🔥 ГЛАВНОЕ — отключает ВСЕ касания
+        chart.setDragEnabled(false)    // ❌ убираем скролл
+        chart.setScaleEnabled(false)   // ❌ зум
+        chart.setPinchZoom(false)      // ❌ зум двумя пальцами
+        chart.isHighlightPerTapEnabled = false  // ❌ нажатия на столбцы
+        chart.isHighlightPerDragEnabled = false // ❌ выделение при свайпе
+        chart.setFitBars(true)          // 🔥 важно для X-оси
+        chart.setScaleEnabled(false)    // ❌ убираем зум пальцами
+        chart.setPinchZoom(false)
+        chart.setDragEnabled(true)
+
+        chart.extraBottomOffset = 20f
+        chart.extraLeftOffset = 00f
+        chart.extraRightOffset = 00f
+
+        // ===== X AXIS =====
+        val xAxis = chart.xAxis
         xAxis.valueFormatter = IndexAxisValueFormatter(labels)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+
         xAxis.granularity = 1f
+        xAxis.labelCount = labels.size   // 🔥 чтобы все подписи были видны
         xAxis.labelRotationAngle = -45f
 
-        val left: YAxis = chart.axisLeft
-        val right: YAxis = chart.axisRight
+        xAxis.textSize = 12f
+        xAxis.setDrawGridLines(false)
+
+        xAxis.spaceMin = 0.5f
+        xAxis.spaceMax = 0.5f
+
+        // ===== Y AXIS =====
+        val left = chart.axisLeft
+        val right = chart.axisRight
+
         right.isEnabled = false
+
+        left.textSize = 12f
         left.granularity = 1f
+        left.setDrawGridLines(false)
+
+        left.axisMinimum = 0f   // ❌ запрещаем отрицательные значения
+
+        // ===== АНИМАЦИЯ =====
+        chart.animateY(800)
 
         chart.invalidate()
     }

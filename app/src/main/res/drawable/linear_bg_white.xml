@@ -7,7 +7,7 @@
     <!-- Обводка -->
     <stroke
         android:width="2dp"
-        android:color="#FFD700" />
+        android:color="#DCDCDC" />
 
     <!-- Закругление углов (опционально) -->
     <corners android:radius="8dp" />

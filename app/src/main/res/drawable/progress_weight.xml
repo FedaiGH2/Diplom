@@ -1,4 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-  
-</selector>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Фон полоски -->
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="12dp"/>
+            <solid android:color="#E0E0E0"/>
+        </shape>
+    </item>
+
+    <!-- Фронт (прогресс) -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="12dp"/>
+                <solid android:color="#FFA500"/> <!-- оранжевый цвет -->
+            </shape>
+        </clip>
+    </item>
+</layer-list>

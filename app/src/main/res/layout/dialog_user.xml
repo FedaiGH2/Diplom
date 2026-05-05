@@ -1,6 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/linear_bg_white">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/dialogTitlel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Данные пользователя"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Email (только для чтения) -->
+        <EditText
+            android:id="@+id/inputEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:enabled="false"/>
+
+        <!-- Возраст -->
+        <EditText
+            android:id="@+id/inputAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Возраст"
+            android:layout_marginTop="8dp"
+            android:inputType="number"
+            android:gravity="center"/>
+
+        <!-- Вес -->
+        <EditText
+            android:id="@+id/inputWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Вес (кг)"
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"
+            android:gravity="center"/>
+
+        <!-- Рост -->
+        <EditText
+            android:id="@+id/inputHeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Рост (см)"
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"
+            android:gravity="center"/>
+
+        <!-- Цель -->
+        <EditText
+            android:id="@+id/inputGoal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Цель (0/1/2)"
+            android:layout_marginTop="8dp"
+            android:inputType="number"
+            android:gravity="center"/>
+
+        <!-- Пол -->
+        <Spinner
+            android:id="@+id/genderSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Роль (admin / support) -->
+        <Spinner
+            android:id="@+id/roleSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Кнопка Сохранить -->
+        <Button
+            android:id="@+id/saveUserBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Сохранить"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FFD700"
+            android:textSize="20sp"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Кнопка Удалить -->
+        <Button
+            android:id="@+id/deleteUserBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Удалить"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FF0000"
+            android:textSize="20sp"
+            android:layout_marginTop="12dp"/>
+    </LinearLayout>
+</ScrollView>

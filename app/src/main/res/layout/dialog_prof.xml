@@ -69,21 +69,6 @@
 
 
 
-        <!-- Цель -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Целевой вес (кг)"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"/>
-        <EditText
-            android:id="@+id/inputGoal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Введите цель"
-            android:inputType="number"
-            android:gravity="center"/>
 
         <!-- Пол -->
         <TextView

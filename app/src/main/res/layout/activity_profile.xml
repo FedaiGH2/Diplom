@@ -1,155 +1,297 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="#F5F5F5">
 
-
+    <!-- Scrollable content -->
     <ScrollView
-        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottomNavigation"
-        android:padding="16dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <TextView
-                android:id="@+id/TitleForList"
+                android:id="@+id/Title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="MyFit"
-                android:textSize="60sp"
-                android:textStyle="bold"
+                android:layout_height="55dp"
                 android:gravity="center"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="30dp"/>
-
-            <TextView
-                android:id="@+id/emailText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email: "
+                android:text="MY PROFILE"
                 android:textSize="30sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="4dp"/>
+                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/genderText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Пол: "
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="4dp"/>
+            <!-- HEADER -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="118dp"
+                android:background="@drawable/linear_bg_white"
+                android:elevation="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
+                <ImageView
+                    android:id="@+id/avatarImage"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/circle_bg"
+                    android:clipToOutline="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/png1" />
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp">
+
+                    <TextView
+                        android:id="@+id/emailText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="email@gmail.com"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/editBtn"
+                    android:layout_width="35dp"
+                    android:layout_height="45dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Изменить"
+                    android:src="@drawable/pen" />
+            </LinearLayout>
+
+            <!-- КАРТОЧКИ ВЕС/РОСТ/ВОЗРАСТ/ЦЕЛЬ -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="16dp">
+
+                <!-- Вес -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/card_bg"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Вес"/>
+
+                    <TextView
+                        android:id="@+id/weightText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="- кг"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <!-- Рост -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/card_bg"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Рост"/>
+
+                    <TextView
+                        android:id="@+id/heightText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="- см"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <!-- Возраст -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/card_bg"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Возраст"/>
+
+                    <TextView
+                        android:id="@+id/ageText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="- лет"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <!-- Цель -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/card_bg"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ЦЕЛЬ"/>
+
+                    <TextView
+                        android:id="@+id/goalText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="- кг"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Пол -->
+            <LinearLayout
+                android:id="@+id/cardGender"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/card_bg"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="8dp">
+                android:padding="16dp">
 
                 <TextView
-                    android:id="@+id/weightText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Вес: "
-                    android:textStyle="bold"
-                    android:textSize="30sp"/>
+                    android:text="Пол"/>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/changeWeightBtn"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/pen"
-                    android:padding="4dp"
-                    android:text=""
-                    app:backgroundTint="@null"/>
+                <TextView
+                    android:id="@+id/genderText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Не указан"/>
             </LinearLayout>
 
-
-            <LinearLayout
+            <!-- КНОПКА АДМИН -->
+            <Button
+                android:id="@+id/adminBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="8dp">
+                android:text="Админ панель"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#FFD700"
+                android:textColor="#FFFFFF"
+                android:visibility="gone"/>
 
-                <TextView
-                    android:id="@+id/heightText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Рост: "
-                    android:textSize="30sp"
-                    android:textStyle="bold"/>
+            <!-- КНОПКА ВЫХОД -->
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/changeHeightBtn"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/pen"
-                    android:padding="4dp"
-                    android:text=""
-                    app:backgroundTint="@null"/>
-            </LinearLayout>
-
-
-            <LinearLayout
+            <Button
+                android:id="@+id/createBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:id="@+id/ageText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Возраст: "
-                    android:textStyle="bold"
-                    android:textSize="30sp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/changeAgeBtn"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/pen"
-                    android:padding="4dp"
-                    android:text=""
-                    app:backgroundTint="@null"/>
-            </LinearLayout>
+                android:text="Создать новую цель"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#4CAF50"
+                android:textColor="#FFFFFF"/>
 
             <Button
                 android:id="@+id/logoutBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Выйти из аккаунта"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#F44336"
-                android:layout_marginTop="200dp"/>
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#FF4C4C"
+                android:textColor="#FFFFFF"/>
 
         </LinearLayout>
-
     </ScrollView>
 
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigation"
+    <!-- BOTTOM BAR -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
         android:background="#FFFFFF"
-        app:itemIconSize="32dp"
-        app:itemTextColor="@color/black"
-        app:itemIconTint="@color/black"
-        app:menu="@menu/bottom_nav_menu"/>
+        android:weightSum="5"
+        android:gravity="center">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/home"
+            android:padding="18dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <ImageView
+            android:id="@+id/fav"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/person"
+            android:padding="18dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <ImageView
+            android:id="@+id/scan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/code"
+            android:padding="18dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <ImageView
+            android:id="@+id/food"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/favor"
+            android:padding="18dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <ImageView
+            android:id="@+id/stats"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/stat"
+            android:padding="18dp"
+            android:clickable="true"
+            android:focusable="true"/>
+    </LinearLayout>
+
+</LinearLayout>

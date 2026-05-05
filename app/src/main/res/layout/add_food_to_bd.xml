@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,6 +10,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Заголовок -->
         <TextView
             android:id="@+id/dialogProduct"
             android:layout_width="match_parent"
@@ -19,6 +21,7 @@
             android:gravity="center"
             android:layout_marginBottom="12dp"/>
 
+        <!-- Название продукта -->
         <EditText
             android:id="@+id/inputName"
             android:layout_width="match_parent"
@@ -27,6 +30,7 @@
             android:textSize="18sp"
             android:gravity="center"/>
 
+        <!-- Калории -->
         <EditText
             android:id="@+id/inputCalories"
             android:layout_width="match_parent"
@@ -36,6 +40,7 @@
             android:inputType="numberDecimal"
             android:gravity="center"/>
 
+        <!-- Белки -->
         <EditText
             android:id="@+id/inputProtein"
             android:layout_width="match_parent"
@@ -45,6 +50,7 @@
             android:inputType="numberDecimal"
             android:gravity="center"/>
 
+        <!-- Жиры -->
         <EditText
             android:id="@+id/inputFat"
             android:layout_width="match_parent"
@@ -54,6 +60,7 @@
             android:inputType="numberDecimal"
             android:gravity="center"/>
 
+        <!-- Углеводы -->
         <EditText
             android:id="@+id/inputCarb"
             android:layout_width="match_parent"
@@ -63,6 +70,7 @@
             android:inputType="numberDecimal"
             android:gravity="center"/>
 
+        <!-- Клетчатка -->
         <EditText
             android:id="@+id/inputFiber"
             android:layout_width="match_parent"
@@ -72,6 +80,7 @@
             android:inputType="numberDecimal"
             android:gravity="center"/>
 
+        <!-- Кнопка Добавить -->
         <Button
             android:id="@+id/addProductBtn"
             android:layout_width="match_parent"
@@ -81,6 +90,18 @@
             android:backgroundTint="#FFD700"
             android:textSize="20sp"
             android:layout_marginTop="16dp"/>
+
+        <!-- Кнопка Удалить (по умолчанию скрыта, видна только админ) -->
+        <Button
+            android:id="@+id/deleteProductBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Удалить"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FF0000"
+            android:textSize="20sp"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
