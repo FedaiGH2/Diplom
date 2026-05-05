@@ -1,0 +1,18 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <!-- Зеленый круг -->
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M24,0
+                          A24,24 0 1,1 23.999,0
+                          Z"/>
+
+    <!-- Белый плюс -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M22,12 H26 V22 H36 V26 H26 V36 H22 V26 H12 V22 H22 Z"/>
+</vector>

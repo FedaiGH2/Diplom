@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/linear_bg_white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Заполните данные"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Возраст -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Возраст"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+        <EditText
+            android:id="@+id/inputAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите возраст"
+            android:inputType="number"
+            android:gravity="center"/>
+
+        <!-- Вес -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Вес (кг)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+        <EditText
+            android:id="@+id/inputWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите вес"
+            android:inputType="number"
+            android:gravity="center"/>
+
+        <!-- Рост -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Рост (см)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+        <EditText
+            android:id="@+id/inputHeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите рост"
+            android:inputType="number"
+            android:gravity="center"/>
+
+
+
+        <!-- Цель -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Целевой вес (кг)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+        <EditText
+            android:id="@+id/inputGoal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите цель"
+            android:inputType="number"
+            android:gravity="center"/>
+
+        <!-- Пол -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Пол"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+        <Spinner
+            android:id="@+id/genderSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+        <!-- Кнопка -->
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Сохранить"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FFD700"
+            android:layout_marginTop="20dp"/>
+    </LinearLayout>
+</ScrollView>

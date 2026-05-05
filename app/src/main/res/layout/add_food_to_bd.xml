@@ -1,0 +1,87 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/linear_bg_white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/dialogProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Введите данные на 100 г"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/inputName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Название продукта"
+            android:textSize="18sp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/inputCalories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Калории"
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/inputProtein"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Белки"
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/inputFat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Жиры"
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/inputCarb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Углеводы"
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/inputFiber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Клетчатка"
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/addProductBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Добавить"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FFD700"
+            android:textSize="20sp"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+
+</ScrollView>
