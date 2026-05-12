@@ -1,5 +1,6 @@
 package com.example.diplom.adapters
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -102,11 +103,15 @@ class StatsWeekFragment : Fragment() {
                     fiberEntries.add(BarEntry(index.toFloat(), totalFiber[0]))
 
                     if (caloriesEntries.size == 7) {
-                        setupChart(chartCalories, caloriesEntries, "Калории", days)
-                        setupChart(chartProtein, proteinEntries, "Белки", days)
-                        setupChart(chartFat, fatEntries, "Жиры", days)
-                        setupChart(chartCarb, carbEntries, "Углеводы", days)
-                        setupChart(chartFiber, fiberEntries, "Клетчатка", days)
+                        setupChart(chartCalories, caloriesEntries, "Калории", days, Color.BLUE)
+
+                        setupChart(chartProtein, proteinEntries, "Белки", days, Color.RED)
+
+                        setupChart(chartFat, fatEntries, "Жиры", days, Color.parseColor("#FFA500"))
+
+                        setupChart(chartCarb, carbEntries, "Углеводы", days, Color.YELLOW)
+
+                        setupChart(chartFiber, fiberEntries, "Клетчатка", days, Color.GREEN)
                     }
                 }
         }
@@ -116,13 +121,14 @@ class StatsWeekFragment : Fragment() {
         chart: BarChart,
         entries: List<BarEntry>,
         label: String,
-        labels: List<String>
+        labels: List<String>,
+        color: Int
     ) {
         val dataSet = BarDataSet(entries, label).apply {
-            color = resources.getColor(R.color.blue)
+            this.color = color
 
             setDrawValues(true)
-            valueTextSize = 14f   // 👀 крупные числа над столбцами
+            valueTextSize = 14f
         }
 
         val data = BarData(dataSet).apply {
@@ -132,57 +138,34 @@ class StatsWeekFragment : Fragment() {
 
         chart.data = data
 
-        // ===== ОБЩИЕ НАСТРОЙКИ =====
         chart.description.isEnabled = false
         chart.legend.isEnabled = false
 
         chart.setDrawGridBackground(false)
         chart.setDrawBorders(false)
 
-        chart.setFitBars(true)          // 🔥 важно для X-оси
-        chart.setScaleEnabled(false)    // ❌ убираем зум пальцами
+        chart.setFitBars(true)
+        chart.setScaleEnabled(false)
         chart.setPinchZoom(false)
-        chart.setDragEnabled(true)
+        chart.setDragEnabled(false)
 
         chart.extraBottomOffset = 10f
-        chart.extraLeftOffset = 00f
-        chart.extraRightOffset = 00f
 
-        // ===== X AXIS =====
         val xAxis = chart.xAxis
         xAxis.valueFormatter = IndexAxisValueFormatter(labels)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-
         xAxis.granularity = 1f
-        xAxis.labelCount = labels.size   // 🔥 чтобы все подписи были видны
+        xAxis.labelCount = labels.size
         xAxis.labelRotationAngle = -45f
-
         xAxis.textSize = 12f
         xAxis.setDrawGridLines(false)
-        chart.setTouchEnabled(false)   // 🔥 ГЛАВНОЕ — отключает ВСЕ касания
-        chart.setDragEnabled(false)    // ❌ убираем скролл
-        chart.setScaleEnabled(false)   // ❌ зум
-        chart.setPinchZoom(false)      // ❌ зум двумя пальцами
-        chart.isHighlightPerTapEnabled = false  // ❌ нажатия на столбцы
-        chart.isHighlightPerDragEnabled = false // ❌ выделение при свайпе
-        xAxis.spaceMin = 0.5f
-        xAxis.spaceMax = 0.5f
 
-        // ===== Y AXIS =====
         val left = chart.axisLeft
-        val right = chart.axisRight
-
-        right.isEnabled = false
-
+        chart.axisRight.isEnabled = false
         left.textSize = 12f
-        left.granularity = 1f
         left.setDrawGridLines(false)
+        left.axisMinimum = 0f
 
-        left.axisMinimum = 0f   // ❌ запрещаем отрицательные значения
-
-        // ===== АНИМАЦИЯ =====
         chart.animateY(800)
-
         chart.invalidate()
-    }
-}
+    }}

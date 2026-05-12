@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#F1F1F1"
     tools:context=".FavoriteFoodActivity">
 
 
@@ -30,16 +30,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Поиск в избранном"
-
-        android:drawableStart="@android:drawable/ic_menu_search"
-        android:drawableTint="#FFFFFF"
+        android:drawableStart="@drawable/lypa"
         android:padding="12dp"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
+        android:drawablePadding="8dp"
+        android:textColor="#111111"
+        android:textColorHint="#111111"
         android:background="@drawable/rounded_edittext"
         android:inputType="text"
         android:layout_marginTop="20dp"
-
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintTop_toBottomOf="@id/TitleForList"
@@ -47,6 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
 
+    <!-- BOTTOM BAR -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favRecyclerView"
         android:layout_width="0dp"
@@ -56,11 +55,11 @@
         android:paddingBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/favSearchInput" />
+        app:layout_constraintTop_toBottomOf="@id/favSearchInput"
+        app:layout_constraintVertical_bias="0.0" />
 
-
-    <!-- BOTTOM BAR -->
     <LinearLayout
         android:id="@+id/bottomBar"
         android:layout_width="0dp"
@@ -99,7 +98,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/code"
-            android:padding="18dp"
+            android:padding="10dp"
             android:clickable="true"
             android:focusable="true"/>
 

@@ -3,4 +3,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#00BFFF</color>
+    <color name="main_blue">#2146F3</color>
+    <color name="light_bg">#F5F6FA</color>
+    <color name="card_bg">#FFFFFF</color>
+    <color name="text_dark">#1F1F1F</color>
+    <color name="text_gray">#8E8E93</color>
+    <color name="green">#34C759</color>
+    <color name="orange">#FF9500</color>
+    <color name="red">#FF3B30</color>
+    <color name="shadow">#12000000</color>
 </resources>

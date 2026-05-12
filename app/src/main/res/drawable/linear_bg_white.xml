@@ -4,10 +4,6 @@
     <!-- Фоновый цвет -->
     <solid android:color="#FFFF" />
 
-    <!-- Обводка -->
-    <stroke
-        android:width="2dp"
-        android:color="#DCDCDC" />
 
     <!-- Закругление углов (опционально) -->
     <corners android:radius="8dp" />

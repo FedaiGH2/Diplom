@@ -3,17 +3,34 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp">
+    android:padding="16dp">
 
-    <EditText
-        android:id="@+id/searchInput"
+    <!-- SEARCH CONTAINER -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Поиск продуктов"
-        android:inputType="text"
-        android:padding="8dp" />
+        android:orientation="vertical"
+        android:background="@drawable/rounded_edittext"
+        android:padding="12dp"
+        android:layout_marginBottom="12dp">
 
-    <!-- Скроллируемый контейнер -->
+        <!-- SEARCH INPUT -->
+        <EditText
+            android:id="@+id/searchInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Поиск продуктов"
+            android:textColor="#111111"
+            android:textColorHint="#111111"
+            android:drawableStart="@drawable/lypa"
+            android:drawableTint="#111111"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:drawablePadding="8dp"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <!-- PRODUCTS LIST -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -27,4 +44,5 @@
             android:orientation="vertical"
             android:layout_marginTop="8dp"/>
     </ScrollView>
+
 </LinearLayout>

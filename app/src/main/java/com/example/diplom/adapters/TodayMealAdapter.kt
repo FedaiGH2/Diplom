@@ -79,7 +79,6 @@ class TodayMealAdapter(
         val gramsInput: EditText = view.findViewById(R.id.dialogGramsInput)
         val editButton: Button = view.findViewById(R.id.dialogEditButton)
 
-        // Заполняем данные
         productNameText.text = meal.name
         caloriesText.text = "Калории: ${meal.calories.toInt()}"
         proteinText.text = "Белки: ${meal.protein} г"
@@ -91,27 +90,39 @@ class TodayMealAdapter(
         val dialog = AlertDialog.Builder(context)
             .setView(view)
             .create()
+
         dialog.show()
 
         editButton.setOnClickListener {
+
+            // 🔒 защита от спама
+            editButton.isEnabled = false
+
             val gramsStr = gramsInput.text.toString().trim()
-            if (gramsStr.isEmpty()) return@setOnClickListener
+            if (gramsStr.isEmpty()) {
+                editButton.isEnabled = true
+                return@setOnClickListener
+            }
 
             val newGrams = gramsStr.toFloatOrNull()
             if (newGrams == null) {
                 Toast.makeText(context, "Введите корректное число", Toast.LENGTH_SHORT).show()
+                editButton.isEnabled = true
                 return@setOnClickListener
             }
 
             val userId = user.uid
-            val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(currentCalendar.time)
+            val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                .format(currentCalendar.time)
 
             db.collection("dailyMeals").document(userId)
                 .collection(today)
                 .document(meal.id)
                 .delete()
                 .addOnSuccessListener {
+
                     val factor = newGrams / meal.grams
+
                     val newMeal = hashMapOf(
                         "name" to meal.name,
                         "grams" to newGrams,
@@ -127,6 +138,7 @@ class TodayMealAdapter(
                         .collection(today)
                         .add(newMeal)
                         .addOnSuccessListener {
+
                             Toast.makeText(context, "Продукт обновлён", Toast.LENGTH_SHORT).show()
 
                             val updatedMeal = meals[position]
@@ -142,8 +154,16 @@ class TodayMealAdapter(
                             if (context is MainActivity) {
                                 context.loadDailyMeals()
                             }
+
                             dialog.dismiss()
                         }
+                        .addOnFailureListener {
+                            editButton.isEnabled = true
+                        }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Ошибка обновления", Toast.LENGTH_SHORT).show()
+                    editButton.isEnabled = true
                 }
         }
     }

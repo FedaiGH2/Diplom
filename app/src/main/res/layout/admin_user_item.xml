@@ -2,15 +2,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp"
-    android:layout_marginTop="6dp"
-    android:background="@drawable/linear_bg_s">
+    android:padding="12dp"
+    android:gravity="center_vertical"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginTop="12dp"
+    android:background="@drawable/bg_card">
 
+    <!-- НАЗВАНИЕ -->
     <TextView
         android:id="@+id/emailText"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="user@gmail.com"
-        android:textSize="20sp"/>
+        android:layout_weight="1"
+        android:text="Название"
+        android:textSize="18sp"
+        android:textColor="#111111"
+        android:textStyle="bold" />
 
 </LinearLayout>

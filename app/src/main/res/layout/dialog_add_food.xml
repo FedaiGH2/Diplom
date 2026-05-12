@@ -8,17 +8,17 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/dialogAddFavorite"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="60dp"
+        android:layout_height="44dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:text=""
         android:padding="0dp"
+        android:text=""
+        app:backgroundTint="@android:color/transparent"
         app:icon="@drawable/star_grey"
-        app:iconSize="48dp"
-        app:iconTint="@null"
         app:iconGravity="textStart"
-        app:backgroundTint="@android:color/transparent"/>
+        app:iconSize="48dp"
+        app:iconTint="@null" />
 
     <TextView
         android:id="@+id/dialogProduct"

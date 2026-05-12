@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="#f1f1f1">
 
     <!-- Scrollable content -->
     <ScrollView
@@ -19,21 +19,11 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:id="@+id/Title"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:gravity="center"
-                android:text="MY PROFILE"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
             <!-- HEADER -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="118dp"
                 android:background="@drawable/linear_bg_white"
-                android:elevation="4dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="16dp">
@@ -99,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="- кг"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
 
@@ -123,7 +113,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="- см"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
 
@@ -147,7 +137,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="- лет"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
 
@@ -164,14 +154,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ЦЕЛЬ"/>
+                        android:text="Цель"/>
 
                     <TextView
                         android:id="@+id/goalText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="- кг"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
             </LinearLayout>
@@ -199,23 +189,22 @@
                     android:text="Не указан"/>
             </LinearLayout>
 
-            <!-- КНОПКА АДМИН -->
             <Button
                 android:id="@+id/adminBtn"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Админ панель"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="#FFD700"
+                android:backgroundTint="#0000ff"
                 android:textColor="#FFFFFF"
                 android:visibility="gone"/>
 
-            <!-- КНОПКА ВЫХОД -->
-
             <Button
                 android:id="@+id/createBtn"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Создать новую цель"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="#4CAF50"
@@ -223,8 +212,9 @@
 
             <Button
                 android:id="@+id/logoutBtn"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Выйти из аккаунта"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="#FF4C4C"
@@ -269,7 +259,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/code"
-            android:padding="18dp"
+            android:padding="10dp"
             android:clickable="true"
             android:focusable="true"/>
 

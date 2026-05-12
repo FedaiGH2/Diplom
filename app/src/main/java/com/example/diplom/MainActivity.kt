@@ -100,6 +100,43 @@ class MainActivity : AppCompatActivity() {
             currentCalendar.timeInMillis = selectedDateMillis
         }
 
+        binding.searchInput.setOnTouchListener { v, event ->
+            val editText = v as EditText
+
+            if (event.action == android.view.MotionEvent.ACTION_UP) {
+
+                val drawableEnd = 2
+                val drawable = editText.compoundDrawables[drawableEnd]
+
+                if (drawable != null) {
+
+                    val clearIconStart =
+                        editText.width - editText.paddingEnd - drawable.bounds.width()
+
+                    if (event.x >= clearIconStart) {
+
+                        // 🔥 очистить текст
+                        editText.setText("")
+
+                        // 🔥 скрыть результаты
+                        binding.searchResultsRecycler.visibility = View.GONE
+
+                        // 🔥 убрать фокус (сделать НЕактивным)
+                        editText.clearFocus()
+
+                        // 🔥 скрыть клавиатуру
+                        val imm = getSystemService(Context.INPUT_METHOD_SERVICE)
+                                as android.view.inputmethod.InputMethodManager
+                        imm.hideSoftInputFromWindow(editText.windowToken, 0)
+
+                        return@setOnTouchListener true
+                    }
+                }
+            }
+            false
+        }
+
+
         // --- INIT UI ---
         updateDayUI()
         setupTodayMeals()
@@ -144,11 +181,10 @@ class MainActivity : AppCompatActivity() {
         val scan = findViewById<ImageView>(R.id.scan)
         val food = findViewById<ImageView>(R.id.food)
         val stats = findViewById<ImageView>(R.id.stats)
-
+        setActiveTab(home)
         home.setOnClickListener {
             setActiveTab(home)
         }
-
         fav.setOnClickListener {
             setActiveTab(fav)
             startActivity(Intent(this, ProfileActivity::class.java))
@@ -168,9 +204,6 @@ class MainActivity : AppCompatActivity() {
             setActiveTab(stats)
             startActivity(Intent(this, StatisticsActivity::class.java))
         }
-
-        // --- DEFAULT ACTIVE TAB ---
-        setActiveTab(home)
     }
 
     private fun setupTodayMeals() {
@@ -194,8 +227,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateDayUI() {
-        val sdf = SimpleDateFormat("EEEE dd-MM-yyyy", Locale("ru"))
-        binding.dayOfWeekText.text = sdf.format(currentCalendar.time)
+        val todayCal = Calendar.getInstance()
+
+        fun Calendar.clearTime() {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        val current = currentCalendar.clone() as Calendar
+
+        todayCal.clearTime()
+        current.clearTime()
+
+        val diff = ((current.timeInMillis - todayCal.timeInMillis) / (1000 * 60 * 60 * 24)).toInt()
+
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale("ru"))
+
+        val title = when (diff) {
+            0 -> "Сегодня"
+            1 -> "Завтра"
+            -1 -> "Вчера"
+            else -> null
+        }
+
+        binding.dayOfWeekText.text = if (title != null) {
+            "$title\n${dateFormat.format(currentCalendar.time)}"
+        } else {
+            dateFormat.format(currentCalendar.time)
+        }
     }
 
 
@@ -304,102 +365,193 @@ class MainActivity : AppCompatActivity() {
     // --- ДИАЛОГИ И ЛОГИКА ЕДЫ ---
 
     fun showAddFoodDialog(productId: String) {
-        // Используем актуальную проверку пользователя
         val user = FirebaseAuth.getInstance().currentUser ?: return
 
         val dialogBinding = DialogAddFoodBinding.inflate(layoutInflater)
-        val dialog = AlertDialog.Builder(this).setView(dialogBinding.root).create()
 
-        dialogBinding.dialogBtn100g.setOnClickListener { dialogBinding.dialogGramsInput.setText("100") }
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogBinding.root)
+            .setCancelable(true)
+            .create()
+
+        dialogBinding.dialogBtn100g.setOnClickListener {
+            val currentText = dialogBinding.dialogGramsInput.text.toString()
+            val current = currentText.toIntOrNull() ?: 0
+            val newValue = current + 100
+            dialogBinding.dialogGramsInput.setText(newValue.toString())
+        }
+
+        var isProcessingMeal = false
+        var isFavoriteLoading = false
 
         lifecycleScope.launch {
-            val doc = db.collection("products").document(productId).get().await()
-            if (!doc.exists()) {
-                Toast.makeText(this@MainActivity, "Продукт не найден в базе", Toast.LENGTH_SHORT).show()
+            try {
+
+                // -------------------- PRODUCT --------------------
+                val doc = db.collection("products")
+                    .document(productId)
+                    .get()
+                    .await()
+
+                if (!doc.exists()) {
+                    Toast.makeText(this@MainActivity, "Продукт не найден", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                    return@launch
+                }
+
+                val name = doc.getString("name") ?: ""
+                val protein = doc.getDouble("protein")?.toFloat() ?: 0f
+                val fat = doc.getDouble("fat")?.toFloat() ?: 0f
+                val carb = doc.getDouble("carb")?.toFloat() ?: 0f
+                val fiber = doc.getDouble("fiber")?.toFloat() ?: 0f
+                val calories = doc.getDouble("calories")?.toFloat() ?: 0f
+
+                dialogBinding.dialogProductName.text = name
+                dialogBinding.dialogProteinText.text = "Белки: ${protein.roundToInt()}"
+                dialogBinding.dialogFatText.text = "Жиры: ${fat.roundToInt()}"
+                dialogBinding.dialogCarbText.text = "Углеводы: ${carb.roundToInt()}"
+                dialogBinding.dialogFiberText.text = "Клетчатка: ${fiber.roundToInt()}"
+                dialogBinding.dialogCaloriesText.text = "Калории: ${calories.roundToInt()}"
+
+                // -------------------- FAVORITE STATUS --------------------
+                val favRef = db.collection("usersFood")
+                    .document(user.uid)
+                    .collection("favorite_food")
+                    .document(productId)
+
+                var isFavorite = favRef.get().await().exists()
+
+                dialogBinding.dialogAddFavorite.icon = ContextCompat.getDrawable(
+                    this@MainActivity,
+                    if (isFavorite) R.drawable.star else R.drawable.star_grey
+                )
+
+                // -------------------- FAVORITE BUTTON --------------------
+                dialogBinding.dialogAddFavorite.setOnClickListener {
+                    if (isFavoriteLoading) return@setOnClickListener
+                    isFavoriteLoading = true
+
+                    lifecycleScope.launch {
+                        try {
+                            if (isFavorite) {
+                                favRef.delete().await()
+                                isFavorite = false
+
+                                dialogBinding.dialogAddFavorite.icon =
+                                    ContextCompat.getDrawable(this@MainActivity, R.drawable.star_grey)
+
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Удалено из избранного",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                val favData = mapOf(
+                                    "name" to name,
+                                    "calories" to calories,
+                                    "protein" to protein,
+                                    "fat" to fat,
+                                    "carb" to carb,
+                                    "fiber" to fiber
+                                )
+
+                                favRef.set(favData).await()
+                                isFavorite = true
+
+                                dialogBinding.dialogAddFavorite.icon =
+                                    ContextCompat.getDrawable(this@MainActivity, R.drawable.star)
+
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Добавлено в избранное",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Ошибка избранного",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } finally {
+                            isFavoriteLoading = false
+                        }
+                    }
+                }
+
+                // -------------------- ADD TO MEALS --------------------
+                dialogBinding.dialogAddMeal.setOnClickListener {
+                    if (isProcessingMeal) return@setOnClickListener
+                    isProcessingMeal = true
+
+                    val gramsStr = dialogBinding.dialogGramsInput.text.toString().trim()
+
+                    if (gramsStr.isBlank()) {
+                        Toast.makeText(this@MainActivity, "Введите вес продукта", Toast.LENGTH_SHORT).show()
+                        isProcessingMeal = false
+                        return@setOnClickListener
+                    }
+
+                    val grams = gramsStr.toFloat()
+                    val m = grams / 100f
+
+                    val todayKey = SimpleDateFormat(
+                        "yyyy-MM-dd",
+                        Locale.getDefault()
+                    ).format(currentCalendar.time)
+
+                    dialog.dismiss()
+
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        try {
+                            val docId = "${productId}_${System.currentTimeMillis()}"
+
+                            db.collection("dailyMeals")
+                                .document(user.uid)
+                                .collection(todayKey)
+                                .document(docId)
+                                .set(
+                                    mapOf(
+                                        "name" to name,
+                                        "grams" to grams,
+                                        "calories" to calories * m,
+                                        "protein" to protein * m,
+                                        "fat" to fat * m,
+                                        "carb" to carb * m,
+                                        "fiber" to fiber * m,
+                                        "timestamp" to System.currentTimeMillis()
+                                    )
+                                ).await()
+
+                            withContext(Dispatchers.Main) {
+                                loadDailyMeals()
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Добавлено в дневник",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
+                        } catch (e: Exception) {
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Ошибка записи",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        } finally {
+                            isProcessingMeal = false
+                        }
+                    }
+                }
+
+            } catch (e: Exception) {
+                Toast.makeText(this@MainActivity, "Ошибка загрузки продукта", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
-                return@launch
-            }
-
-            val name = doc.getString("name") ?: ""
-            val protein = doc.getDouble("protein")?.toFloat() ?: 0f
-            val fat = doc.getDouble("fat")?.toFloat() ?: 0f
-            val carb = doc.getDouble("carb")?.toFloat() ?: 0f
-            val fiber = doc.getDouble("fiber")?.toFloat() ?: 0f
-            val calories = doc.getDouble("calories")?.toFloat() ?: 0f
-
-            dialogBinding.dialogProductName.text = name
-            dialogBinding.dialogProteinText.text = "Белки: ${protein.roundToInt()}"
-            dialogBinding.dialogFatText.text = "Жиры: ${fat.roundToInt()}"
-            dialogBinding.dialogCarbText.text = "Углеводы: ${carb.roundToInt()}"
-            dialogBinding.dialogFiberText.text = "Клетчатка: ${fiber.roundToInt()}"
-            dialogBinding.dialogCaloriesText.text = "Калории: ${calories.roundToInt()}"
-
-            // Проверка избранного
-            var isFavorite = false
-            val favDoc = db.collection("usersFood").document(user.uid)
-                .collection("favorite_food").document(productId).get().await()
-            if (favDoc.exists()) isFavorite = true
-
-            dialogBinding.dialogAddFavorite.icon = ContextCompat.getDrawable(
-                this@MainActivity,
-                if (isFavorite) R.drawable.star else R.drawable.star_grey
-            )
-
-            // Логика кнопки избранного
-            dialogBinding.dialogAddFavorite.setOnClickListener {
-                val favRef = db.collection("usersFood").document(user.uid)
-                    .collection("favorite_food").document(productId)
-
-                if (isFavorite) {
-                    favRef.delete().addOnSuccessListener {
-                        isFavorite = false
-                        dialogBinding.dialogAddFavorite.icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.star_grey)
-                        Toast.makeText(this@MainActivity, "Удалено из избранного", Toast.LENGTH_SHORT).show()
-                    }.addOnFailureListener {
-                        Toast.makeText(this@MainActivity, "Ошибка при удалении", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    val favData = mapOf(
-                        "name" to name, "calories" to calories, "protein" to protein,
-                        "fat" to fat, "carb" to carb, "fiber" to fiber
-                    )
-                    favRef.set(favData).addOnSuccessListener {
-                        isFavorite = true
-                        dialogBinding.dialogAddFavorite.icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.star)
-                        Toast.makeText(this@MainActivity, "Добавлено в избранное", Toast.LENGTH_SHORT).show()
-                    }.addOnFailureListener {
-                        Toast.makeText(this@MainActivity, "Ошибка при добавлении", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-
-            // Логика добавления в дневник питания
-            dialogBinding.dialogAddMeal.setOnClickListener {
-                val gramsStr = dialogBinding.dialogGramsInput.text.toString().trim()
-                if (gramsStr.isBlank()) {
-                    Toast.makeText(this@MainActivity, "Введите вес продукта", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-
-                val grams = gramsStr.toFloat()
-                val m = grams / 100f
-                val todayKey = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(currentCalendar.time)
-
-                db.collection("dailyMeals").document(user.uid).collection(todayKey)
-                    .add(mapOf(
-                        "name" to name, "grams" to grams,
-                        "calories" to calories * m, "protein" to protein * m,
-                        "fat" to fat * m, "carb" to carb * m, "fiber" to fiber * m,
-                        "timestamp" to System.currentTimeMillis()
-                    )).addOnSuccessListener {
-                        Toast.makeText(this@MainActivity, "Добавлено в дневник", Toast.LENGTH_SHORT).show()
-                        loadDailyMeals()
-                        dialog.dismiss()
-                    }.addOnFailureListener {
-                        Toast.makeText(this@MainActivity, "Ошибка записи в дневник", Toast.LENGTH_SHORT).show()
-                    }
             }
         }
+
         dialog.show()
     }
 
@@ -414,9 +566,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        loadDailyMeals()
-        loadUserNorms()
+        setActiveTab(findViewById(R.id.home))
         setupWeightProgress()
+        loadUserNorms()
+        loadDailyMeals()
+
 
         val currentUser = FirebaseAuth.getInstance().currentUser ?: return
         val userId = currentUser.uid
@@ -472,10 +626,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateCharts(calories: Float, protein: Float, fat: Float, carb: Float, fiber: Float) {
         setupPieChart(binding.mainPieChart, calories, CALORIES_NORM, Color.BLUE)
-        setupPieChart(binding.proteinChart, protein, PROTEIN_NORM, Color.GREEN)
-        setupPieChart(binding.fatChart, fat, FAT_NORM, Color.RED)
-        setupPieChart(binding.carbChart, carb, CARB_NORM, Color.MAGENTA)
-        setupPieChart(binding.fiberChart, fiber, FIBER_NORM, Color.CYAN)
+        setupPieChart(binding.proteinChart, protein, PROTEIN_NORM, Color.RED)
+        setupPieChart(binding.fatChart, fat, FAT_NORM, Color.parseColor("#FFA500")) // оранжевый
+        setupPieChart(binding.carbChart, carb, CARB_NORM, Color.YELLOW) // жёлтый
+        setupPieChart(binding.fiberChart, fiber, FIBER_NORM, Color.GREEN)
 
         binding.mainChartValue.text = "${calories.roundToInt()} / ${CALORIES_NORM.roundToInt()} ккал"
         binding.proteinValue.text = "${protein.roundToInt()} / ${PROTEIN_NORM.roundToInt()} г"
@@ -665,7 +819,7 @@ class MainActivity : AppCompatActivity() {
                     val currentText = binding.currentWeightText
                     val goalText = binding.goalWeightText
 
-                    startText.text = "Начало: ${startWeight.roundToInt()} кг"
+                    startText.text = "Было: ${startWeight.roundToInt()} кг"
                     currentText.text = "Сейчас: ${currentWeight.roundToInt()} кг"
                     goalText.text = "Цель: ${goalWeight.roundToInt()} кг"
 
@@ -706,7 +860,8 @@ class MainActivity : AppCompatActivity() {
                 .update("weight", newWeight)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Вес обновлён", Toast.LENGTH_SHORT).show()
-                    setupWeightProgress() // Обновляем прогресс
+                    setupWeightProgress()
+                    loadUserNorms()// Обновляем прогресс
 
                     // --- Проверка достижения цели после изменения веса ---
                     db.collection("users").document(uid).get()

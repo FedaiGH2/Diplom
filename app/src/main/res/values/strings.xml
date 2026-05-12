@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">Diplom</string>
+    <string name="email">email@gmail.com</string>
+    <string name="edit">Изменить</string>
+
+    <string name="weight">Вес</string>
+    <string name="weight_default">- кг</string>
+
+    <string name="height">Рост</string>
+    <string name="height_default">- см</string>
+
+    <string name="age">Возраст</string>
+    <string name="age_default">- лет</string>
+
+    <string name="goal">Цель</string>
+    <string name="goal_default">- кг</string>
+
+    <string name="gender">Пол</string>
+    <string name="not_specified">Не указан</string>
+
+    <string name="admin_panel">Админ панель</string>
+    <string name="create_goal">Создать новую цель</string>
+    <string name="logout">Выйти из аккаунта</string>
+
+    <string name="avatar_desc">Аватар пользователя</string>
+    <string name="home">Главная</string>
+    <string name="profile">Профиль</string>
+    <string name="scan">Сканировать</string>
+    <string name="food">Питание</string>
+    <string name="stats">Статистика</string>
 </resources>

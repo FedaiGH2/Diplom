@@ -238,7 +238,7 @@ class ProfileActivity : AppCompatActivity() {
                 val avatarIndex = (doc["avatar"] as? Number)?.toInt() ?: 0
 
                 val avatars = listOf(
-                    R.drawable.png1,
+                    R.drawable.png0,
                     R.drawable.png1,
                     R.drawable.png2,
                     R.drawable.png3,
@@ -290,7 +290,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun showAvatarDialog() {
 
         val avatars = listOf(
-            R.drawable.png1,
+            R.drawable.png0,
             R.drawable.png1,
             R.drawable.png2,
             R.drawable.png3,

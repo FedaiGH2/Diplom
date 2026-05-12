@@ -3,15 +3,21 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="12dp"
-    android:layout_marginTop="6dp"
-    android:background="@drawable/linear_bg_s"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginTop="12dp"
+    android:background="@drawable/bg_card">
 
+    <!-- НАЗВАНИЕ -->
     <TextView
         android:id="@+id/nameText"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="Название"
-        android:textSize="20sp"/>
+        android:textSize="18sp"
+        android:textColor="#111111"
+        android:textStyle="bold" />
 
 </LinearLayout>

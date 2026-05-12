@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
+    android:background="#f1f1f1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminActivity">
@@ -21,6 +22,7 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/adminTabLayout"
+        android:background="#f1f1f1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
